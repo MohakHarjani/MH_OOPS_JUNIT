@@ -58,8 +58,8 @@ public class AccountTest3_Paramterized {
 	
 	//==============================================================================================================
 	//arguments will have 3 args as an array, but we want only first one arguments[0]"
-	@ParameterizedTest (name = "Test idx = {index}, argValue = {0}")
-//	@ParameterizedTest (name = "Test idx = {index}, argValue = {arguments}")
+//	@ParameterizedTest (name = "Test idx = {index}, argValue = {0}")
+	@ParameterizedTest (name = "Test idx = {index}, argValue = {arguments}")
 	@CsvFileSource (resources = "myData.csv", numLinesToSkip = 1) //we need to skip the first row (contains only fieldNames)
 	void testWithdraw3(double prevBalance, double withdrawAmount, double expectedBalance)
 	{
