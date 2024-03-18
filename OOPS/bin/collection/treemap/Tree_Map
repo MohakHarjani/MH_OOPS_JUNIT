@@ -1,0 +1,92 @@
+
+
+# TreeMap first assumes that the class that you passed as a generic must implement "Comparable" interface
+# In Java almost all Inbuilt classes implement the "Comparable" interface
+# The Comparable interface forces the class to implement "compareTo" method
+# So the class which represents the "KEY" (no effect of value' class) must implement "Comparable"
+  So on adding any value in TreeMap, it calls "compareTo" method to decide the "Order" in which
+  <K, V> pair are to be stored
+
+# format of compareTo method
+    public int compareTo (Object o)
+    {
+
+    }
+# CompareTo is called for each existingObj "IN ORDER"
+# * Format in which it is called 
+    (existingObj).compareTo(newObj)
+  
+  * existingObj is the object which is already in the collection 
+  * newObj is the new object (key) which is being "put" into the treeMap
+  * If you want NO SWAP and want existingObj should stay "AHEAD" in the order ==> RETURN -ve Number
+  * If you want a SWAP and want newObj should come "AHEAD" in order ==> RETURN +ve Number
+  *   EXISTING OBJ AHEAD ===> RETURN -ve number
+  *   NEW OBJ AHEAD ===> RETURN +ve number
+  * if it returns 0 then both objects/keys are same 
+  * handling the return 0 case for equal object is very important
+  * if 0 case isn't handled map will allow duplicates as it will not be able to check
+    whether two objects are equal or not
+
+
+
+# If the class that represents the "KEY" (like some user define class like Employee etc..)
+  does not implement "Comaprable" interface then it will give a ClassCast Exception
+# Suppose we use TreeMap, and use Employee class a "KEY"
+# Because Employee class doesn't implement "Comparable" interface
+# Internally "TreeMap.put()" assumes that the class would implement "Comparable"
+  and thus tries to call "compareTo()" method on Employee class
+  something like this (Comparable)existingObj.compareTo(newObj) would be called
+
+# But existingObj's class does not implement "Comparable" 
+  and existingObj does not hold a "IS-A" relationship with "Comparable"
+# Thus it gives a ClassCast Exception
+
+
+//=====================================================================================================
+
+Comparator interface
+#Used when we want to change default compare functionality of inbuilt classes
+
+		//String class by default sorts the string lexicographically
+		// But if I want to compare String object's differently...how can we do that
+		// We cannot change the internal implementation of the compareTo method which is being overriden
+		//   in the String class
+		// We can then use "Comparator" interface 
+		// TreeMap has a constructor which accepts "Comparator" type object as a parameter
+		
+		// Method - 1
+		//  *Create a custom class which implements "Comaparator" (functional) interface
+		//  *Then implement the "compare(Obj a, Obj b)' method
+		//  *Then pass object/instance of that custom Class as a parameter while creating TreeMap
+		
+		// Method-2
+		// *Create an anonymous class and it's ref using lambda function
+		// *So directly write the code of compare method inside the lamda function
+		// *Pass that function as param while creating TreeMap
+		
+		Comparator<String> cc = new CustomCompare();
+		TreeMap<String, Integer>mp2 = new TreeMap<>(cc); //This stored based on length of string
+
+
+//=========================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+

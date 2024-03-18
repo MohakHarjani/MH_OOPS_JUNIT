@@ -1,0 +1,63 @@
+$$$$ How to override the "equals" method of Object in our Custom class
+
+@Override
+public boolean equals(Object obj)  //signature of Object's equals method
+{
+   return (obj.empId == this.empId);
+}
+# This would not work
+# Compile time type of obj is "Object"
+# Even if we pass an Employee object ar "runtime", then also this statement is wrong
+  At runtime ...Object obj = new Employee(...) //this will work at runtime 
+  But at compile time only this will give error
+# because at compile time on "obj.empId", compiler will search for empId in typeOf(obj) which is Object
+# So compiler will search for "empId" property in "Object" class
+# But it will not be able to find it 
+# Hence will give error
+
+
+
+@Override
+public boolean equals(Object obj)  //signature of Object's equals method
+{
+   return ((Employee)obj).empId == this.empId);
+}
+
+# This will work
+# We can typecase obj to Employee
+# This will fool the compiler and will force it to search for "empId" in "Employee" at compile time
+# Now at compile time compile will find "empId" in "Employee" and will compile nicely
+# At runtime there may be two cases
+  -> Case-1 ...We are sure that we will pass "Employee" reference in parameters
+     * Then there is no problem
+     * At runtime empId can be accessed from "Employee" reference
+     * "(Employee)obj).empId" 
+     * This will work even if we pass any "sub classes/child classes" in obj
+     * obj should have a "IS-A" relationship with casted type (Employee here)
+
+  -> Case-2.....We are not sure that what we will pass in params
+     * Then if accidently passed any class ref which  does not holds "IS-A" relation with Employee
+     * That will give us a "ClassCast" exception
+     * emp1.equals(new Object()) //this would give an error then
+     
+#So to handle both cases we need to make a type check
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+
+		if (obj instanceof Employee)
+		{
+			return ((Employee)obj).empId == this.empId;
+		}
+		
+		//if obj is not an instance of Employee, ClassCase exp will occur
+		//so return false
+		return false; 
+		
+	}
+
+# So always add a if safety check before typecasting
+
+//===========================================================================================================================================================

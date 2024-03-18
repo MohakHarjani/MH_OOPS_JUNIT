@@ -1,0 +1,70 @@
+
+# HashSet internally uses a HashMap
+#  We add a "valued Object" into the HashSet
+#  HashSet uses the "valued Object" added to Set as a "Key" and a "empty Object" as a value
+# So when we add a "valued Object" it first hashes that "valued Object"
+   It calls the hashCode method on the class/type of "valued Object"
+   So 
+        if we added an Integer , it will call  "Integer.hashCode()"
+        Integer.hashCode() return the value of integer itself which acts as a hasCode
+        so each unique integer will have a unique hashCode
+      
+        if we added a String, it will call "String.hashCode()"
+        String.hashCode() hashes the string character wise
+
+# There can be collisions 
+# Two objects with "DIFFERENT VALUE"..."CAN HAVE SAME HASHCODE"
+# So we need a "Bucket" sort of thing to store objects having same hashCode together
+# In hashSet each bucket store's <Key, Value> or <Valued Obj, Empty Object> in form of a 
+  ArraList or array (Not factual.....just assuming)
+# In LinkedHashSet each bucket store's <Key, Value> in form of a Linked List
+# This hasCode value acts a bucketLabel for every bucket
+# Each bucket will contain the elements/Objects having the same hashCode in some datstructure (unkonwn)
+
+
+# Now to prevent duplicates in a hashSet
+# Java first hashes the value Object, then go the corresponding Bucket
+# Then inside bucket it checks for each stored value that whether already stored value is equal to newly
+  added Object's value
+# It does check equality by calling the equals method on the generic type class
+# So it will keep checking equality 
+   => If found equal..it doesn't insert
+   => If not found....it inserts the new Object in the current bucket
+
+
+# For checking contains it does the same thing
+# Hashes the passed Obj, goes to the corresponding bucket
+# If bucket is empty...directly says not found
+# Else ....iterate on every object in bucket and checks for equality using "equals method"
+
+//============================================================================================================================
+
+# For user defined classes 
+# By default Hashset will first use
+  => Object.hashCode() 
+  => The compare using Object.equals() which in turn compares the adrresses of objects only
+
+# So each object will be treated differently and HashSet would appear to be faulty
+# So as a solution for user defined classes you should always Override
+  ->hashCode() 
+  ->equals() inside the user defined class
+
+
+//===================================================================================================
+
+IMPORTANT RULE 
+
+a.equals(b) must also mean that
+a.hashCode() == b.hashCode()
+
+But a.hashCode() == b.hashCode()
+does NOT have to mean a.equals(b)
+
+
+
+//===================================================================================================
+
+
+
+
+   
